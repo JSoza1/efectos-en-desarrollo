@@ -41,7 +41,7 @@
       width: 100%;
       height: 100%;
       background-color: #1a1a1a;
-      transition: left 2s linear; /* Usamos 'linear' para un movimiento uniforme */
+      transition: left 2s linear; /* Movimiento uniforme */
       z-index: 1;
     }
     .dark-mode {
@@ -110,7 +110,11 @@
       chars.forEach((char) => {
         const charRect = char.getBoundingClientRect(); // Posición de la letra
         const charPosition = charRect.left + charRect.width / 2; // Centro de la letra
-        const delay = (charPosition / overlayWidth) * animationDuration; // Tiempo de retraso
+
+        // Calcular el retraso según la dirección del movimiento
+        const delay = toWhite
+          ? (charPosition / overlayWidth) * animationDuration // Izquierda a derecha
+          : ((overlayWidth - charPosition) / overlayWidth) * animationDuration; // Derecha a izquierda
 
         setTimeout(() => {
           char.style.color = toWhite ? 'white' : 'black';
