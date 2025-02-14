@@ -11,9 +11,8 @@
       font-family: Arial, sans-serif;
       overflow-x: hidden;
       position: relative;
-      transition: background-color 1s, color 1s;
+      transition: background-color 1.5s, color 1.5s; /* Cambiado de '1s' a '1.5s' */
     }
-
     button {
       padding: 12px 24px;
       font-size: 16px;
@@ -24,11 +23,9 @@
       color: white;
       transition: background-color 0.3s;
     }
-
     button:hover {
       background-color: #45a049;
     }
-
     .content {
       max-width: 600px;
       margin: 40px auto;
@@ -36,28 +33,24 @@
       position: relative;
       z-index: 2;
     }
-
-    .content h1, .content p {
-      position: relative;
-      transition: color 1s;
-    }
-
     /* Capa oscura que se mueve */
     .dark-overlay {
       position: fixed;
       top: 0;
-      left: 100%;
+      left: -100%; /* Comienza fuera de la pantalla a la izquierda */
       width: 100%;
       height: 100%;
       background-color: #1a1a1a;
-      transition: left 1s ease-in-out;
+      transition: left 2s ease-in-out; /* Cambiado de '1s' a '2s' */
       z-index: 1;
     }
-
     .dark-mode {
       color: white;
     }
-
+    .char {
+      display: inline-block;
+      transition: color 0.5s; /* Cambiado de '0.3s' a '0.5s' */
+    }
   </style>
 </head>
 <body>
@@ -67,29 +60,55 @@
     <p id="paragraph">Presiona el botón para cambiar entre modo claro y oscuro</p>
     <button onclick="toggleDarkMode()">Cambiar Modo</button>
   </div>
-
   <script>
     let isDarkMode = false;
     const darkOverlay = document.getElementById('darkOverlay');
     const title = document.getElementById('title');
     const paragraph = document.getElementById('paragraph');
 
+    // Función para dividir el texto en caracteres y aplicar clases
+    function splitTextIntoChars(element) {
+      const text = element.innerText;
+      element.innerHTML = ''; // Limpiar el contenido original
+      for (let i = 0; i < text.length; i++) {
+        const charSpan = document.createElement('span');
+        charSpan.className = 'char';
+        charSpan.innerText = text[i];
+        element.appendChild(charSpan);
+      }
+    }
+
+    // Dividir el texto inicial en caracteres
+    splitTextIntoChars(title);
+    splitTextIntoChars(paragraph);
+
     function toggleDarkMode() {
       if (!isDarkMode) {
-        // Mover la capa oscura desde la derecha hasta cubrir la pantalla
-        darkOverlay.style.left = '0';
+        // Mover la capa oscura desde la izquierda hasta cubrir la pantalla
+        darkOverlay.style.left = '0'; // Movimiento hacia la derecha
         setTimeout(() => {
           document.body.classList.add("dark-mode");
-        }, 500); // Ajustamos el tiempo para que coincida con la mitad de la animación
+          changeTextColor(true); // Cambiar colores de texto a blanco
+        }, 1000); // Cambiado de '500' a '1000' para coincidir con la transición más lenta
       } else {
-        // Regresar la capa oscura hacia la derecha
-        darkOverlay.style.left = '100%';
+        // Regresar la capa oscura hacia la izquierda
+        darkOverlay.style.left = '-100%'; // Movimiento hacia la izquierda
         setTimeout(() => {
           document.body.classList.remove("dark-mode");
-        }, 500);
+          changeTextColor(false); // Cambiar colores de texto a negro
+        }, 1000); // Cambiado de '500' a '1000'
       }
-
       isDarkMode = !isDarkMode;
+    }
+
+    // Función para cambiar el color del texto letra por letra
+    function changeTextColor(toWhite) {
+      const chars = document.querySelectorAll('.char');
+      chars.forEach((char, index) => {
+        setTimeout(() => {
+          char.style.color = toWhite ? 'white' : 'black';
+        }, index * 30); // Cambiado de '20' a '30' para un efecto más lento
+      });
     }
   </script>
 </body>
