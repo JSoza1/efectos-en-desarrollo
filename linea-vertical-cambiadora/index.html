@@ -11,7 +11,7 @@
       font-family: Arial, sans-serif;
       overflow-x: hidden;
       position: relative;
-      transition: background-color 1.5s, color 1.5s; /* Cambiado de '1s' a '1.5s' */
+      transition: background-color 1.5s, color 1.5s;
     }
     button {
       padding: 12px 24px;
@@ -41,7 +41,7 @@
       width: 100%;
       height: 100%;
       background-color: #1a1a1a;
-      transition: left 2s ease-in-out; /* Cambiado de '1s' a '2s' */
+      transition: left 2s linear; /* Usamos 'linear' para un movimiento uniforme */
       z-index: 1;
     }
     .dark-mode {
@@ -49,7 +49,7 @@
     }
     .char {
       display: inline-block;
-      transition: color 0.5s; /* Cambiado de '0.3s' a '0.5s' */
+      transition: color 0.3s;
     }
   </style>
 </head>
@@ -88,26 +88,33 @@
         darkOverlay.style.left = '0'; // Movimiento hacia la derecha
         setTimeout(() => {
           document.body.classList.add("dark-mode");
-          changeTextColor(true); // Cambiar colores de texto a blanco
-        }, 1000); // Cambiado de '500' a '1000' para coincidir con la transición más lenta
+        }, 2000); // Esperar a que termine la animación de la capa oscura
+        animateTextColor(true); // Animar el cambio de color de las letras
       } else {
         // Regresar la capa oscura hacia la izquierda
         darkOverlay.style.left = '-100%'; // Movimiento hacia la izquierda
         setTimeout(() => {
           document.body.classList.remove("dark-mode");
-          changeTextColor(false); // Cambiar colores de texto a negro
-        }, 1000); // Cambiado de '500' a '1000'
+        }, 2000); // Esperar a que termine la animación de la capa oscura
+        animateTextColor(false); // Animar el cambio de color de las letras
       }
       isDarkMode = !isDarkMode;
     }
 
-    // Función para cambiar el color del texto letra por letra
-    function changeTextColor(toWhite) {
+    // Función para animar el cambio de color de las letras
+    function animateTextColor(toWhite) {
       const chars = document.querySelectorAll('.char');
-      chars.forEach((char, index) => {
+      const overlayWidth = window.innerWidth; // Ancho de la capa oscura
+      const animationDuration = 2000; // Duración de la animación en milisegundos
+
+      chars.forEach((char) => {
+        const charRect = char.getBoundingClientRect(); // Posición de la letra
+        const charPosition = charRect.left + charRect.width / 2; // Centro de la letra
+        const delay = (charPosition / overlayWidth) * animationDuration; // Tiempo de retraso
+
         setTimeout(() => {
           char.style.color = toWhite ? 'white' : 'black';
-        }, index * 30); // Cambiado de '20' a '30' para un efecto más lento
+        }, delay);
       });
     }
   </script>
