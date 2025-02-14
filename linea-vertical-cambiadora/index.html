@@ -82,44 +82,60 @@
     splitTextIntoChars(title);
     splitTextIntoChars(paragraph);
 
+    let animationFrameId = null;
+
     function toggleDarkMode() {
       if (!isDarkMode) {
         // Mover la capa oscura desde la izquierda hasta cubrir la pantalla
         darkOverlay.style.left = '0'; // Movimiento hacia la derecha
-        setTimeout(() => {
-          document.body.classList.add("dark-mode");
-        }, 2000); // Esperar a que termine la animación de la capa oscura
-        animateTextColor(true); // Animar el cambio de color de las letras
+        startAnimation(true); // Iniciar animación de las letras
       } else {
         // Regresar la capa oscura hacia la izquierda
         darkOverlay.style.left = '-100%'; // Movimiento hacia la izquierda
-        setTimeout(() => {
-          document.body.classList.remove("dark-mode");
-        }, 2000); // Esperar a que termine la animación de la capa oscura
-        animateTextColor(false); // Animar el cambio de color de las letras
+        startAnimation(false); // Iniciar animación de las letras
       }
       isDarkMode = !isDarkMode;
     }
 
-    // Función para animar el cambio de color de las letras
-    function animateTextColor(toWhite) {
+    // Función para iniciar la animación de las letras
+    function startAnimation(toWhite) {
+      stopAnimation(); // Detener cualquier animación anterior
+
+      // Obtener todas las letras
       const chars = document.querySelectorAll('.char');
-      const overlayWidth = window.innerWidth; // Ancho de la capa oscura
-      const animationDuration = 2000; // Duración de la animación en milisegundos
+      const overlayWidth = window.innerWidth;
 
-      chars.forEach((char) => {
-        const charRect = char.getBoundingClientRect(); // Posición de la letra
-        const charPosition = charRect.left + charRect.width / 2; // Centro de la letra
+      // Función para actualizar el color de las letras en cada fotograma
+      function updateTextColors() {
+        const currentLeft = parseFloat(window.getComputedStyle(darkOverlay).left); // Posición actual de la capa oscura
+        chars.forEach((char) => {
+          const charRect = char.getBoundingClientRect();
+          const charPosition = charRect.left + charRect.width / 2; // Centro de la letra
 
-        // Calcular el retraso según la dirección del movimiento
-        const delay = toWhite
-          ? (charPosition / overlayWidth) * animationDuration // Izquierda a derecha
-          : ((overlayWidth - charPosition) / overlayWidth) * animationDuration; // Derecha a izquierda
+          // Determinar si la capa oscura ha pasado sobre la letra
+          const isCovered = toWhite
+            ? charPosition <= currentLeft + overlayWidth // Izquierda a derecha
+            : charPosition >= currentLeft + overlayWidth; // Derecha a izquierda
 
-        setTimeout(() => {
-          char.style.color = toWhite ? 'white' : 'black';
-        }, delay);
-      });
+          char.style.color = isCovered ? (toWhite ? 'white' : 'black') : (toWhite ? 'black' : 'white');
+        });
+
+        // Continuar la animación mientras la transición esté activa
+        if (currentLeft > -overlayWidth && currentLeft < overlayWidth) {
+          animationFrameId = requestAnimationFrame(updateTextColors);
+        }
+      }
+
+      // Iniciar la animación
+      updateTextColors();
+    }
+
+    // Función para detener la animación
+    function stopAnimation() {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
     }
   </script>
 </body>
