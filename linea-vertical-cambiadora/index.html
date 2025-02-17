@@ -1,162 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      background-color: white;
-      color: black;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-      position: relative;
-      transition: background-color 1.5s, color 1.5s;
-    }
-
-    button {
-      padding: 12px 24px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      transition: background-color 0.3s;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .content {
-      max-width: 600px;
-      margin: 40px auto;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .dark-overlay {
-      position: fixed;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background-color: #1a1a1a;
-      transition: left 2s linear;
-      z-index: 1;
-    }
-
-    .dark-mode {
-      color: white;
-    }
-
-    .char {
-      display: inline-block;
-      transition: color 0.3s;
-    }
-
-    h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
-      word-spacing: normal;
-      letter-spacing: normal;
-    }
-
-    p {
-      font-size: 1.1em;
-      margin: 0 0 20px 0;
-      word-spacing: normal;
-      letter-spacing: normal;
-    }
-
-    /* Fix para el espaciado entre caracteres */
-    .char:not(:last-child) {
-      margin-right: 0.01em;
-    }
-
-    /* Mantener el espaciado natural entre palabras */
-    .char.space {
-      margin-right: 0.3em;
-    }
-  </style>
+  <!-- Conecta con el archivo de estilos CSS -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Capa que se desliza para crear el efecto de oscurecimiento -->
   <div class="dark-overlay" id="darkOverlay"></div>
+  
+  <!-- Contenedor principal del contenido -->
   <div class="content">
+    <!-- Título que se transformará -->
     <h1 id="title">Cambio de Modo</h1>
+    <!-- Párrafo que se transformará -->
     <p id="paragraph">Presiona el botón para cambiar entre modo claro y oscuro</p>
+    <!-- Botón que activa la función de cambio -->
     <button onclick="toggleDarkMode()">Cambiar Modo</button>
+    <p>asdasd asd</p>
+
   </div>
-
-  <script>
-    let isDarkMode = false;
-    const darkOverlay = document.getElementById('darkOverlay');
-    const title = document.getElementById('title');
-    const paragraph = document.getElementById('paragraph');
-
-    function splitTextIntoChars(element) {
-      const text = element.innerText;
-      element.innerHTML = '';
-      for (let i = 0; i < text.length; i++) {
-        const charSpan = document.createElement('span');
-        charSpan.className = 'char' + (text[i] === ' ' ? ' space' : '');
-        charSpan.innerText = text[i];
-        element.appendChild(charSpan);
-      }
-    }
-
-    splitTextIntoChars(title);
-    splitTextIntoChars(paragraph);
-
-    let animationFrameId = null;
-
-    function toggleDarkMode() {
-      if (!isDarkMode) {
-        darkOverlay.style.left = '0';
-        startAnimation(true);
-      } else {
-        darkOverlay.style.left = '-100%';
-        startAnimation(false);
-      }
-      isDarkMode = !isDarkMode;
-    }
-
-    function startAnimation(toWhite) {
-      stopAnimation();
-
-      const chars = document.querySelectorAll('.char');
-      const overlayWidth = window.innerWidth;
-
-      function updateTextColors() {
-        const currentLeft = parseFloat(window.getComputedStyle(darkOverlay).left);
-        chars.forEach((char) => {
-          const charRect = char.getBoundingClientRect();
-          const charPosition = charRect.left + charRect.width / 2;
-
-          const isCovered = toWhite 
-            ? charPosition <= currentLeft + overlayWidth
-            : charPosition >= currentLeft + overlayWidth;
-
-          char.style.color = isCovered ? (toWhite ? 'white' : 'black') : (toWhite ? 'black' : 'white');
-        });
-
-        if (currentLeft > -overlayWidth && currentLeft < overlayWidth) {
-          animationFrameId = requestAnimationFrame(updateTextColors);
-        }
-      }
-
-      updateTextColors();
-    }
-
-    function stopAnimation() {
-      if (animationFrameId !== null) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-      }
-    }
-  </script>
+  
+  <!-- Conecta con el archivo JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
