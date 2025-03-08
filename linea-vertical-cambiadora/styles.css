@@ -1,60 +1,121 @@
-/* Estilos del cuerpo de la página */
-body {
-    margin: 0;                /* Sin márgenes externos */
-    padding: 20px;           /* Espacio interno */
-    min-height: 100vh;       /* Altura mínima de toda la ventana */
-    background-color: white; /* Fondo blanco inicial */
-    color: black;           /* Color de texto negro inicial */
-    font-family: Arial;     /* Tipo de letra */
-    overflow-x: hidden;     /* Oculta el scroll horizontal */
-    position: relative;     /* Para posicionamiento de elementos internos */
-    transition: background-color 1.5s, color 1.5s; /* Animación suave de colores */
-  }
-  
-  /* Estilos del botón */
-  button {
-    padding: 12px 24px;     /* Espacio interno del botón */
-    font-size: 16px;        /* Tamaño de letra */
-    border: none;           /* Sin borde */
-    border-radius: 5px;     /* Esquinas redondeadas */
-    cursor: pointer;        /* Cursor de mano al pasar por encima */
-    background-color: #4CAF50; /* Color verde del botón */
-    color: white;           /* Texto blanco */
-    transition: background-color 0.3s; /* Animación al pasar el mouse */
-  }
-  
-  /* Contenedor principal */
-  .content {
-    max-width: 600px;       /* Ancho máximo */
-    margin: 40px auto;      /* Centrado con margen superior e inferior */
-    text-align: center;     /* Texto centrado */
-    position: relative;     /* Para posicionamiento */
-    z-index: 2;            /* Capa por encima del overlay */
-  }
-  
-  /* Capa de oscurecimiento */
-  .dark-overlay {
-    position: fixed;        /* Fijado en la pantalla */
-    top: 0;                /* Pegado arriba */
-    left: -100%;           /* Inicialmente fuera de la vista */
-    width: 100%;           /* Ancho completo */
-    height: 100%;          /* Alto completo */
-    background-color: #1a1a1a; /* Color oscuro */
-    transition: left 1.1s linear; /* Animación del deslizamiento */
-  }
-  
-  /* Estilos para cada carácter individual */
-  .char {
-    display: inline-block;  /* Para poder animar cada letra */
-    transition: color 0.3s; /* Animación del cambio de color */
-  }
-  
-  /* Espaciado entre caracteres */
-  .char:not(:last-child) {
-    margin-right: 0.01em;  /* Pequeño espacio entre letras */
-  }
-  
-  /* Espaciado para espacios entre palabras */
-  .char.space {
-    margin-right: 0.3em;   /* Espacio más grande entre palabras */
-  }
+/* Estilos generales */  
+body {          
+  margin: 0;          
+  padding: 20px;          
+  min-height: 100vh;          
+  background-color: white;          
+  color: black;          
+  font-family: Arial;          
+  overflow-x: hidden;          
+  position: relative;          
+  transition: background-color 1.5s, color 1.5s;  
+}    
+
+/* Botón de cambio de modo */  
+button {          
+  padding: 12px 24px;          
+  font-size: 16px;          
+  border: none;          
+  border-radius: 5px;          
+  cursor: pointer;          
+  background-color: #4CAF50;          
+  color: white;          
+  transition: background-color 0.3s;  
+}    
+
+/* Contenedor principal */  
+.content {          
+  max-width: 600px;          
+  margin: 40px auto;          
+  text-align: center;          
+  position: relative;          
+  z-index: 2;  
+}    
+
+/* Capa de oscurecimiento */  
+.dark-overlay {          
+  position: fixed;          
+  top: 0;          
+  left: -100%;          
+  width: 100%;          
+  height: 100%;          
+  background-color: #1a1a1a;          
+  transition: left 1.1s linear;     
+  z-index: 1; /* Asegura que esté por encima del fondo pero por debajo del contenido */ 
+}    
+
+/* Estilos para cada carácter individual */  
+.char {          
+  display: inline-block;          
+  transition: color 0.3s;  
+}    
+
+/* Espaciado entre caracteres */  
+.char:not(:last-child) {          
+  margin-right: 0.01em;  
+}    
+
+/* Espaciado para espacios entre palabras */  
+.char.space {          
+  margin-right: 0.3em;  
+}    
+
+/* ------------------- */  
+/* SISTEMA DE IMÁGENES */  
+/* ------------------- */    
+
+/* Contenedor especial para imágenes */  
+.image-container {          
+  position: relative;          
+  display: inline-block;          
+  width: 100%;          
+  max-width: 600px;          
+  margin: 20px 0;     
+  z-index: 2; /* Da un z-index más alto a las imágenes */ 
+}    
+
+/* Imágenes base */  
+.light-image, .dark-image {          
+  position: absolute;          
+  top: 0;          
+  left: 0;          
+  width: 100%;          
+  height: auto;          
+  transition: none; /* Desactivamos la transición CSS - la controlaremos con JS */ 
+}    
+
+/* Visibilidad inicial */  
+.light-image {      
+  opacity: 1;  
+}     
+
+.dark-image {      
+  opacity: 0;  
+}     
+
+/* Ajustar el contenedor de imágenes para garantizar que ambas estén visibles */  
+.image-container {        
+  position: relative;        
+  display: inline-block;        
+  width: 100%;        
+  max-width: 600px;        
+  margin: 20px 0;        
+  height: auto; /* Ajustar altura automáticamente */  
+}    
+
+/* Asegurar que ambas imágenes ocupen el mismo espacio */  
+.light-image, .dark-image {        
+  position: absolute;        
+  top: 0;        
+  left: 0;        
+  width: 100%;        
+  height: auto;        
+  transition: none; /* Desactivamos la transición CSS - la controlaremos con JS */  
+}    
+
+/* Hacer que el contenedor tenga una altura mínima para que se vean las imágenes */  
+.image-container::after {        
+  content: "";        
+  display: block;        
+  padding-bottom: 56.25%; /* Proporción 16:9 - ajusta según tus imágenes */  
+}
