@@ -15,16 +15,22 @@
     <!-- Párrafo que se transformará -->
     <p id="paragraph">Presiona el botón para cambiar entre modo claro y oscuro</p>
     <!-- Botón que activa la función de cambio -->
-    <button onclick="toggleDarkMode()">Cambiar Modo</button>
+    <button class="special-button" onclick="toggleDarkMode()">Cambiar Modo</button> <br><br>
+    <!-- Mas botones -->
+    <button class="special-button">Botón con Efecto Especial</button>
+    <button class="special-button">otro boton</button>
+
     <p>imagen que cambia abajo</p>
+    
+    <!-- Contenedor de imagenes cambiantes -->
     <div class="image-container">
       <img src="img/sombra.png" alt="" class="light-image">
       <img src="img/sombra2.png" alt="" class="dark-image">
-  </div>
+    </div>
 
   </div>
   
   <!-- Conecta con el archivo JavaScript -->
-  <script src="cambioDeModo.js"></script>
+  <script src="changeMode.js"></script>
 </body>
 </html>
