@@ -41,19 +41,19 @@ button {
   height: 100%;          
   background-color: #1a1a1a;          
   transition: left 1.1s linear;     
-  z-index: 1; /* Asegura que esté por encima del fondo pero por debajo del contenido */ 
+  z-index: 1;
 }    
 
-/* Estilos para cada carácter individual */  
+/* Estilos para caracteres */  
 .char {          
   display: inline-block;          
   transition: color 0.3s;  
+  margin-right: 0.01em;
 }    
 
-/* Espaciado entre caracteres */  
-.char:not(:last-child) {          
-  margin-right: 0.01em;  
-}    
+.char:last-child {
+  margin-right: 0;
+}
 
 /* Espaciado para espacios entre palabras */  
 .char.space {          
@@ -64,15 +64,22 @@ button {
 /* SISTEMA DE IMÁGENES */  
 /* ------------------- */    
 
-/* Contenedor especial para imágenes */  
+/* Contenedor de imágenes */  
 .image-container {          
   position: relative;          
   display: inline-block;          
   width: 100%;          
   max-width: 600px;          
   margin: 20px 0;     
-  z-index: 2; /* Da un z-index más alto a las imágenes */ 
+  z-index: 2;
 }    
+
+/* Hacer que el contenedor tenga una altura mínima */  
+.image-container::after {        
+  content: "";        
+  display: block;        
+  padding-bottom: 56.25%; /* Proporción 16:9 */  
+}
 
 /* Imágenes base */  
 .light-image, .dark-image {          
@@ -81,7 +88,7 @@ button {
   left: 0;          
   width: 100%;          
   height: auto;          
-  transition: none; /* Desactivamos la transición CSS - la controlaremos con JS */ 
+  transition: none; /* Controlado por JS */ 
 }    
 
 /* Visibilidad inicial */  
@@ -92,33 +99,6 @@ button {
 .dark-image {      
   opacity: 0;  
 }     
-
-/* Ajustar el contenedor de imágenes para garantizar que ambas estén visibles */  
-.image-container {        
-  position: relative;        
-  display: inline-block;        
-  width: 100%;        
-  max-width: 600px;        
-  margin: 20px 0;        
-  height: auto; /* Ajustar altura automáticamente */  
-}    
-
-/* Asegurar que ambas imágenes ocupen el mismo espacio */  
-.light-image, .dark-image {        
-  position: absolute;        
-  top: 0;        
-  left: 0;        
-  width: 100%;        
-  height: auto;        
-  transition: none; /* Desactivamos la transición CSS - la controlaremos con JS */  
-}    
-
-/* Hacer que el contenedor tenga una altura mínima para que se vean las imágenes */  
-.image-container::after {        
-  content: "";        
-  display: block;        
-  padding-bottom: 56.25%; /* Proporción 16:9 - ajusta según tus imágenes */  
-}
 
 /* BOTONES */
 
@@ -132,9 +112,9 @@ button {
   cursor: pointer;
   background-color: #050000;
   position: relative;
-  z-index: 2; /* Aseguramos que esté por encima del overlay */
-  overflow: hidden; /* Para el efecto de fondo */
-  transition: border-color 1.5s; /* Transición suave para el borde */
+  z-index: 2;
+  overflow: hidden;
+  transition: border-color 1.5s;
 }
 
 /* Estilo para el botón especial en modo oscuro */
@@ -145,30 +125,26 @@ button {
 /* Contenedor para las letras del botón */
 .special-button .button-text {
   position: relative;
-  z-index: 3; /* Encima del fondo */
+  z-index: 3;
 }
 
-/* Para el fondo del botón en modo claro */
-.special-button .light-bg {
+/* Fondos del botón */
+.special-button .light-bg,
+.special-button .dark-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #0bcfe9;
   z-index: 1;
-  transition: none; /* Controlamos esto con JS */
+  transition: none; /* Controlado por JS */
 }
 
-/* Para el fondo del botón en modo oscuro */
+.special-button .light-bg {
+  background-color: #0bcfe9;
+}
+
 .special-button .dark-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: a 100%;
-  height: 100%;
   background-color: #0c0b0c;
-  z-index: 1;
-  transition: none; /* Controlamos esto con JS */
-  opacity: 0; /* Inicialmente invisible */
+  opacity: 0;
 }
