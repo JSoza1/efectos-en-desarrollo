@@ -44,12 +44,24 @@ button {
   z-index: 1;
 }    
 
+/* ============= SISTEMA DE TEXTO ============= */
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.space-word {
+  display: inline-block;
+  width: 0.3em;
+}
+
 /* Estilos para caracteres */  
-.char {          
-  display: inline-block;          
-  transition: color 0.3s;  
+.char {
+  display: inline-block;
+  transition: color 0.3s;
   margin-right: 0.01em;
-}    
+  position: relative;
+}
 
 .char:last-child {
   margin-right: 0;
@@ -148,6 +160,11 @@ button {
   background-color: #0c0b0c;
   opacity: 0;
 }
+
+
+
+/* ========= */
+
 
 /* Estilos para las secciones con fondos cambiantes */
 .sectionClara {

@@ -5,7 +5,7 @@ let isDarkMode = false;
 const darkOverlay = document.getElementById('darkOverlay');
 
 // Selecciona todos los elementos de texto (títulos y párrafos)
-const textElements = document.querySelectorAll('h1, p, li, b');
+const textElements = document.querySelectorAll('h1, h2, h3, p, dt, dd, label, li, b ');
 
 // Selecciona los contenedores de imágenes
 const imageContainers = document.querySelectorAll('.image-container');
@@ -47,16 +47,35 @@ function prepareSpecialButtons() {
   });
 }
 
-// Función que divide el texto en caracteres individuales
+// Función que divide el texto en palabras y caracteres
 function splitTextIntoChars(element) {
   const text = element.innerText;
   element.innerHTML = '';
-  for (let i = 0; i < text.length; i++) {
-    const charSpan = document.createElement('span');
-    charSpan.className = 'char' + (text[i] === ' ' ? ' space' : '');
-    charSpan.innerText = text[i];
-    element.appendChild(charSpan);
-  }
+  
+  // Dividir el texto en palabras y espacios
+  const words = text.split(/(\s+)/);
+  
+  words.forEach(word => {
+    // Crear contenedor de palabra
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'word';
+    
+    // Manejar espacios como elementos individuales
+    if (word.match(/\s+/)) {
+      wordSpan.classList.add('space-word');
+      wordSpan.innerHTML = '&nbsp;'; // Usar espacio no rompible
+    } else {
+      // Dividir palabra en caracteres
+      for (let i = 0; i < word.length; i++) {
+        const charSpan = document.createElement('span');
+        charSpan.className = 'char' + (word[i] === ' ' ? ' space' : '');
+        charSpan.innerText = word[i];
+        wordSpan.appendChild(charSpan);
+      }
+    }
+    
+    element.appendChild(wordSpan);
+  });
 }
 
 // Procesa todos los elementos de texto
