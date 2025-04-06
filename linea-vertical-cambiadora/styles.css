@@ -167,10 +167,10 @@ button {
 }
 
 /* Estilos para las secciones cuando están en modo oscuro */
-body.dark-mode .sectionClara {
+.dark-mode .sectionClara {
   background-color: #00828b; /* Rojo oscuro en modo oscuro */
 }
 
-body.dark-mode .sectionOscura {
+.dark-mode .sectionOscura {
   background-color: #9e4caf; /* Verde en modo oscuro */
 }
