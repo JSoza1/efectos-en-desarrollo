@@ -5,7 +5,7 @@ let isDarkMode = false;
 const darkOverlay = document.getElementById('darkOverlay');
 
 // Selecciona todos los elementos de texto (títulos y párrafos)
-const textElements = document.querySelectorAll('h1, p');
+const textElements = document.querySelectorAll('h1, p, li, b');
 
 // Selecciona los contenedores de imágenes
 const imageContainers = document.querySelectorAll('.image-container');

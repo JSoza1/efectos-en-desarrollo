@@ -174,3 +174,15 @@ button {
 .dark-mode .sectionOscura {
   background-color: #9e4caf; /* Verde en modo oscuro */
 }
+
+/* Estilo normal para las listas */
+ul {
+  color: black; /* Color de los bullets en modo claro */
+  transition: color 2.5s;
+}
+
+/* Estilo para las listas en modo oscuro */
+.dark-mode ul {
+  color: white; /* Color de los bullets en modo oscuro */
+  transition: color 2.5s;
+}
