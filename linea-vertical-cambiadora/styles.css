@@ -148,3 +148,29 @@ button {
   background-color: #0c0b0c;
   opacity: 0;
 }
+
+/* Estilos para las secciones con fondos cambiantes */
+.sectionClara {
+  background-color: #24ada7; /* Verde en modo claro */
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  transition: background-color 1.5s;
+}
+
+.sectionOscura {
+  background-color: #8B0000; /* Rojo oscuro en modo claro */
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  transition: background-color 1.5s;
+}
+
+/* Estilos para las secciones cuando están en modo oscuro */
+body.dark-mode .sectionClara {
+  background-color: #00828b; /* Rojo oscuro en modo oscuro */
+}
+
+body.dark-mode .sectionOscura {
+  background-color: #9e4caf; /* Verde en modo oscuro */
+}

@@ -95,6 +95,9 @@ function toggleDarkMode() {
     specialButtons.forEach(button => {
       button.classList.add('dark');
     });
+    
+    // Añadimos la clase dark-mode al body
+    document.body.classList.add('dark-mode');
   } else {
     // Pasamos a modo claro (overlay se desliza fuera de la pantalla)
     darkOverlay.style.left = '-100%';
@@ -103,6 +106,9 @@ function toggleDarkMode() {
     specialButtons.forEach(button => {
       button.classList.remove('dark');
     });
+    
+    // Quitamos la clase dark-mode del body
+    document.body.classList.remove('dark-mode');
   }
   
   // Iniciamos la animación correspondiente
